@@ -37,6 +37,18 @@ public abstract class PageContextFactory implements FacesWrapper<PageContextFact
 	 * Returns an instance of {@link PageContext} from the {@link PageContextFactory} found by the {@link
 	 * FactoryExtensionFinder}.
 	 */
+	public static PageContext getStringPageContextInstance(PageContext pageContext, ELContext elContext) {
+
+		PageContextFactory stringPageContextFactory = (PageContextFactory) FactoryExtensionFinder.getFactory(
+				PageContextFactory.class);
+
+		return stringPageContextFactory.getStringPageContext(pageContext, elContext);
+	}
+
+	/**
+	 * Returns an instance of {@link PageContext} from the {@link PageContextFactory} found by the {@link
+	 * FactoryExtensionFinder}.
+	 */
 	public static PageContext getStringPageContextInstance(HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, ELContext elContext) {
 
@@ -45,6 +57,18 @@ public abstract class PageContextFactory implements FacesWrapper<PageContextFact
 
 		return stringPageContextFactory.getStringPageContext(httpServletRequest, httpServletResponse, elContext);
 	}
+
+	/**
+	 * Returns an instance of {@link PageContext} which renders tag output to a String. Pass the {@link PageContext} to
+	 * {@link javax.servlet.jsp.tagext.Tag#setPageContext(javax.servlet.jsp.PageContext)} before calling {@link
+	 * javax.servlet.jsp.tagext.Tag#doStartTag()} or similar methods to render tag output to a String. Call {@link
+	 * PageContext#getOut()#toString()} to obtain the tag output as a string.
+	 *
+	 * @param  pageContext          The {@link PageContext} to which we are going to associate a string writer
+	 * @param  elContext            The {@link ELContext} associated with the current {@link
+	 *                              javax.faces.context.FacesContext}.
+	 */
+	public abstract PageContext getStringPageContext(PageContext pageContext, ELContext elContext);
 
 	/**
 	 * Returns an instance of {@link PageContext} which renders tag output to a String. Pass the {@link PageContext} to

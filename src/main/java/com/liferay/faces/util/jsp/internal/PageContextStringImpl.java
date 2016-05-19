@@ -38,7 +38,6 @@ import javax.servlet.jsp.tagext.Tag;
 import com.liferay.faces.util.logging.Logger;
 import com.liferay.faces.util.logging.LoggerFactory;
 
-
 /**
  * This class serves as a {@link PageContext} adapter for invoking JSP {@link Tag} classes directly (outside of JSP)
  * during the execution of the JSF lifecycle.
@@ -63,6 +62,23 @@ public class PageContextStringImpl extends PageContext {
 	private ServletContext servletContext;
 	private SessionScope sessionScope;
 	private JspWriter stringJspWriter;
+
+	public PageContextStringImpl(PageContext pageContext, ELContext elContext) {
+
+		this.httpServletRequest = (HttpServletRequest) pageContext.getRequest();
+		this.httpServletResponse = (HttpServletResponse) pageContext.getResponse();
+		this.elContext = elContext;
+		this.httpSession = httpServletRequest.getSession();
+		this.servletContext = httpSession.getServletContext();
+		this.servletConfig = new ServletConfigAdapter(this.servletContext);
+		this.stringJspWriter = new JspWriterStringImpl();
+
+		// Initialize scope maps
+		this.applicationScope = new ApplicationScope(this.servletContext);
+		this.pageScope = new HashMap<String, Object>();
+		this.requestScope = new RequestScope(httpServletRequest);
+		this.sessionScope = new SessionScope(httpSession);
+	}
 
 	public PageContextStringImpl(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
 		ELContext elContext) {

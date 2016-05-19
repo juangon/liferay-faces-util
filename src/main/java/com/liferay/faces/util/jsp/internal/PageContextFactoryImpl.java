@@ -29,6 +29,11 @@ import com.liferay.faces.util.jsp.PageContextFactory;
 public class PageContextFactoryImpl extends PageContextFactory {
 
 	@Override
+	public PageContext getStringPageContext(PageContext pageContext, ELContext elContext) {
+		return new PageContextStringImpl(pageContext, elContext);
+	}
+
+	@Override
 	public PageContext getStringPageContext(HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, ELContext elContext) {
 		return new PageContextStringImpl(httpServletRequest, httpServletResponse, elContext);
