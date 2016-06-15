@@ -18,8 +18,6 @@ package com.liferay.faces.util.jsp.internal;
 import java.io.Serializable;
 
 import javax.el.ELContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
 
 import com.liferay.faces.util.jsp.PageContextFactory;
@@ -34,9 +32,8 @@ public class PageContextFactoryImpl extends PageContextFactory implements Serial
 	private static final long serialVersionUID = 4886312841579943217L;
 
 	@Override
-	public PageContext getStringPageContext(HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, ELContext elContext) {
-		return new PageContextStringImpl(httpServletRequest, httpServletResponse, elContext);
+	public PageContext getStringPageContext(ELContext elContext, PageContext pageContext) {
+		return new PageContextStringImpl(elContext, pageContext);
 	}
 
 	@Override
