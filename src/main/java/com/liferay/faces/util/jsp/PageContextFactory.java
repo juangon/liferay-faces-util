@@ -17,8 +17,6 @@ package com.liferay.faces.util.jsp;
 
 import javax.el.ELContext;
 import javax.faces.FacesWrapper;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
 
 import com.liferay.faces.util.factory.FactoryExtensionFinder;
@@ -37,13 +35,12 @@ public abstract class PageContextFactory implements FacesWrapper<PageContextFact
 	 * Returns an instance of {@link PageContext} from the {@link PageContextFactory} found by the {@link
 	 * FactoryExtensionFinder}.
 	 */
-	public static PageContext getStringPageContextInstance(HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, ELContext elContext) {
+	public static PageContext getStringPageContextInstance(ELContext elContext, PageContext pageContext) {
 
 		PageContextFactory stringPageContextFactory = (PageContextFactory) FactoryExtensionFinder.getFactory(
 				PageContextFactory.class);
 
-		return stringPageContextFactory.getStringPageContext(httpServletRequest, httpServletResponse, elContext);
+		return stringPageContextFactory.getStringPageContext(elContext, pageContext);
 	}
 
 	/**
@@ -52,15 +49,8 @@ public abstract class PageContextFactory implements FacesWrapper<PageContextFact
 	 * javax.servlet.jsp.tagext.Tag#doStartTag()} or similar methods to render tag output to a String. Call {@link
 	 * PageContext#getOut()#toString()} to obtain the tag output as a string.
 	 *
-	 * @param  httpServletRequest   The {@link HttpServletRequest} underlying the {@link
-	 *                              javax.faces.context.ExternalContext} associated with the current {@link
-	 *                              javax.faces.context.FacesContext}.
-	 * @param  httpServletResponse  The {@link HttpServletResponse} underlying the {@link
-	 *                              javax.faces.context.ExternalContext} associated with the current {@link
-	 *                              javax.faces.context.FacesContext}.
-	 * @param  elContext            The {@link ELContext} associated with the current {@link
-	 *                              javax.faces.context.FacesContext}.
+	 * @param  elContext    The {@link ELContext} associated with the current {@link javax.faces.context.FacesContext}.
+	 * @param  pageContext  The {@link PageContext} on with the String page context is going to be created
 	 */
-	public abstract PageContext getStringPageContext(HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, ELContext elContext);
+	public abstract PageContext getStringPageContext(ELContext elContext, PageContext pageContext);
 }

@@ -16,8 +16,6 @@
 package com.liferay.faces.util.jsp.internal;
 
 import javax.el.ELContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
 
 import com.liferay.faces.util.jsp.PageContextFactory;
@@ -29,9 +27,8 @@ import com.liferay.faces.util.jsp.PageContextFactory;
 public class PageContextFactoryImpl extends PageContextFactory {
 
 	@Override
-	public PageContext getStringPageContext(HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, ELContext elContext) {
-		return new PageContextStringImpl(httpServletRequest, httpServletResponse, elContext);
+	public PageContext getStringPageContext(ELContext elContext, PageContext pageContext) {
+		return new PageContextStringImpl(elContext, pageContext);
 	}
 
 	@Override
