@@ -16,6 +16,7 @@
 package com.liferay.faces.util.jsp.internal;
 
 import java.io.IOException;
+import java.io.Writer;
 import java.util.Enumeration;
 
 import javax.el.ELContext;
@@ -28,7 +29,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
-import javax.servlet.jsp.tagext.Tag;
+import javax.servlet.jsp.tagext.BodyContent;
 
 import com.liferay.faces.util.logging.Logger;
 import com.liferay.faces.util.logging.LoggerFactory;
@@ -181,12 +182,12 @@ public class PageContextStringImpl extends PageContext {
 
 	@Override
 	public void include(String relativeUrlPath) throws ServletException, IOException {
-		throw new UnsupportedOperationException();
+		wrappedPageContext.include(relativeUrlPath);;
 	}
 
 	@Override
 	public void include(String relativeUrlPath, boolean flush) throws ServletException, IOException {
-		throw new UnsupportedOperationException();
+		wrappedPageContext.include(relativeUrlPath, flush);
 	}
 
 	@Override
@@ -239,6 +240,26 @@ public class PageContextStringImpl extends PageContext {
 		else {
 			wrappedPageContext.setAttribute(name, value, scope);
 		}
+	}
+	
+	@Override
+	public JspWriter popBody() {
+		return wrappedPageContext.popBody();
+	}
+
+	@Override
+	public BodyContent pushBody() {
+		JspWriter jspWriter = new JspWriterStringImpl();
+
+		BodyContent bodyContent = (BodyContent)wrappedPageContext.pushBody(
+			jspWriter);
+
+		return new BodyContentWrapperImpl(bodyContent, jspWriter);
+	}
+
+	@Override
+	public JspWriter pushBody(Writer writer) {
+		return wrappedPageContext.pushBody(writer);
 	}
 
 }
