@@ -72,7 +72,7 @@ public class PageContextStringImpl extends PageContext {
 
 	@Override
 	public void forward(String relativeUrlPath) throws ServletException, IOException {
-		throw new UnsupportedOperationException();
+		wrappedPageContext.forward(relativeUrlPath);
 	}
 
 	@Override
@@ -202,6 +202,7 @@ public class PageContextStringImpl extends PageContext {
 	public void release() {
 		elContext = null;
 		stringJspWriter = null;
+		wrappedPageContext.release();
 	}
 
 	@Override
