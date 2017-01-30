@@ -1,1 +1,3 @@
 Export-Package: !com.liferay.faces.util.*.internal, com.liferay.faces.util.*
+Require-Capability: osgi.extender; filter:="(osgi.extender=osgi.serviceloader.registrar)"
+Provide-Capability: osgi.serviceloader;osgi.serviceloader=com.liferay.faces.util.factory.FactoryExtensionFinder,osgi.serviceloader;osgi.serviceloader=com.liferay.faces.util.logging.LoggerFactory,osgi.serviceloader;osgi.serviceloader=com.liferay.faces.util.product.ProductFactory
